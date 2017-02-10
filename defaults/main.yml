@@ -1,0 +1,47 @@
+---
+# defaults file for ansible-role-ubuntu-setup
+ubuntu_release: "yakkety"
+default_keyserver: "keyserver.ubuntu.com"
+
+apt_packages: []
+#  - dropbox
+#  - slack
+#  - terminix
+
+ppas: []
+#  - {
+#    # Dropbox.
+#    source: "deb http://linux.dropbox.com/ubuntu xenial main",
+#    fingerprint: "1C61A2656FB57B7E4DE0F4C1FC918B335044912E",
+#    keyserver: "pgp.mit.edu"
+#  },
+#  - {
+#    # Terminix TEMPORARY ppa.
+#    source: "deb http://ppa.launchpad.net/webupd8team/terminix/ubuntu {{ ubuntu_release }} main",
+#    fingerprint: "7B2C3B0889BF5709A105D03AC2518248EEA14886",
+#    keyserver: "{{ default_keyserver }}"
+#  }
+
+no_ppa_packages: []
+# - "https://downloads.slack-edge.com/linux_releases/slack-desktop-2.4.2-amd64.deb"
+
+vagrant_plugins: []
+#  - "vagrant-hostsupdater"
+#  - "vagrant-vbguest"
+
+gtk_theme: "Arc-Darker"
+icon_theme: "Paper"
+theme: "Arc-Darker"
+
+default_user: "someuser"
+default_group: "somegroup"
+
+default_files: []
+#  - {
+#    dest: "/home/someuser/Dev",
+#    state: "directory",
+#  }
+#  - {
+#    dest: "/var/www",
+#    state: "directory",
+#  }

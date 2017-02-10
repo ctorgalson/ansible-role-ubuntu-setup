@@ -1,0 +1,70 @@
+---
+# tasks file for ansible-role-ubuntu-setup
+
+# Additional PPA keys.
+- name: Add keys for non-stock repositories.
+  apt_key:
+    keyserver: "{{ item.keyserver }}"
+    id: "{{ item.fingerprint }}"
+  with_items: "{{ ppas }}"
+
+# Additional repositories.
+- name: Add non-stock repositories.
+  apt_repository:
+    repo: "{{ item.source }}"
+    state: present
+  with_items: "{{ ppas }}"
+
+# Various packages.
+- name: Update apt cache.
+  apt:
+    update_cache: yes
+    cache_valid_time: 86400
+
+- name: Install packages.
+  apt:
+    name: "{{ item }}"
+    state: latest
+  with_items: "{{ apt_packages }}"
+
+# Individual packages (i.e. with no ppa).
+- name: Install non-ppa deb packages.
+  apt:
+    deb: "{{ item }}"
+  with_items: "{{ no_ppa_packages }}"
+
+# More complex things.
+#
+# @todo: set up Dropbox daemon install.
+
+# Install vagrant plugins.
+# @todo: check for vagrant existence first.
+- name: Install vagrant plugins.
+  shell: "vagrant plugin install {{ item }}"
+  with_items:
+    - "vagrant-hostsupdater"
+    - "vagrant-vbguest"
+  become: "ctorgalson"
+
+# System-level configuration.
+
+- name: Makes sure expected directories, links and (empty) files are present.
+  file:
+    src: "{{ item.src | default('') }}"
+    dest: "{{ item.dest }}"
+    state: "{{ item.state }}"
+    owner: "{{ item.owner | default(default_user) }}"
+    group: "{{ item.group | default(default_group) }}"
+  with_items: "{{ default_files }}"
+
+- name: Set gtk theme.
+  command: "gsettings set org.gnome.desktop.interface gtk-theme {{ gtk_theme }}"
+  become: "ctorgalson"
+
+- name: Set gtk icon theme.
+  command: "gsettings set org.gnome.desktop.interface icon-theme {{ icon_theme }}"
+  become: "ctorgalson"
+
+- name: Set window theme.
+  command: "gsettings set org.gnome.desktop.wm.preferences theme {{ theme }}"
+  become: "ctorgalson"
