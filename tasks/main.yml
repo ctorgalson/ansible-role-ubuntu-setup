@@ -7,6 +7,9 @@
     keyserver: "{{ item.keyserver }}"
     id: "{{ item.fingerprint }}"
   with_items: "{{ ppas }}"
+  tags:
+    - packages
+    - ppas
 
 # Additional repositories.
 - name: Add non-stock repositories.
@@ -14,18 +17,25 @@
     repo: "{{ item.source }}"
     state: present
   with_items: "{{ ppas }}"
+  tags:
+    - packages
+    - ppas
 
 # Various packages.
 - name: Update apt cache.
   apt:
     update_cache: yes
     cache_valid_time: 86400
+  tags:
+    - packages
 
 - name: Install packages.
   apt:
     name: "{{ item }}"
     state: latest
   with_items: "{{ apt_packages }}"
+  tags:
+    - packages
 
 # Individual packages (i.e. with no ppa).
 - name: Install non-ppa deb packages.
@@ -56,15 +66,23 @@
     owner: "{{ item.owner | default(default_user) }}"
     group: "{{ item.group | default(default_group) }}"
   with_items: "{{ default_files }}"
+  tags:
+    - setup
 
 - name: Set gtk theme.
   command: "gsettings set org.gnome.desktop.interface gtk-theme {{ gtk_theme }}"
   become: "ctorgalson"
+  tags:
+    - theme
 
 - name: Set gtk icon theme.
   command: "gsettings set org.gnome.desktop.interface icon-theme {{ icon_theme }}"
   become: "ctorgalson"
+  tags:
+    - theme
 
 - name: Set window theme.
   command: "gsettings set org.gnome.desktop.wm.preferences theme {{ theme }}"
   become: "ctorgalson"
+  tags:
+    - theme
