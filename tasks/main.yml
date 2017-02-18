@@ -63,6 +63,7 @@
     dest: "/usr/share/applications/synapse.desktop"
     regexp: "^Exec=synapse"
     line: "Exec=synapse --display:=0"
+  when: "'synapse' in apt_packages"
   become: True
 
 - name: Makes sure expected directories, links and (empty) files are present.
