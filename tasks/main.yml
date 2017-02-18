@@ -58,6 +58,13 @@
 
 # System-level configuration.
 
+- name: Make sure synapse is called with `Exec=synapse --display:=0`.
+  lineinfile:
+    dest: "/usr/share/applications/synapse.desktop"
+    regexp: "^Exec=synapse"
+    line: "Exec=synapse --display:=0"
+  become: True
+
 - name: Makes sure expected directories, links and (empty) files are present.
   file:
     src: "{{ item.src | default('') }}"
