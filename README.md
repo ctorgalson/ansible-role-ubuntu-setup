@@ -8,6 +8,7 @@ installation (using `apt` and `deb`) and setup tasks on Ubuntu.
 | Variable name | Default value | Description |
 |---------------|---------------|-------------|
 | `apt_packages`      | `[]`                   | A list of package names to install. |
+| `apt_removals`      | `[]`                   | A list of package names to uninstall. |
 | `default_keyserver` | `keyserver.ubuntu.com` | Default keyserver to use when adding PPAs. |
 | `ubuntu_release`    | `yakkety`              | Default ubuntu version name to use when adding PPAs. |
 | `ppas`              | `[]`                   | A list of PPAs to install. Each item in the array should include `source`, `fingerprint`, and `keyserver`. See `defaults/main.yml` for examples. |
