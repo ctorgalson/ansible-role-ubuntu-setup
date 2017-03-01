@@ -43,6 +43,14 @@
     deb: "{{ item }}"
   with_items: "{{ no_ppa_packages }}"
 
+
+# Remove packages that should not be present.
+- name: Uninstall packages.
+  apt:
+    name: "{{ item }}"
+    state: absent
+  with_items: "{{ apt_removals }}"
+
 # More complex things.
 #
 # @todo: set up Dropbox daemon install.
