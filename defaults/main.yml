@@ -8,6 +8,9 @@ apt_packages: []
 #  - slack
 #  - terminix
 
+apt_removals: []
+#  - flashplugin-installer
+
 ppas: []
 #  - {
 #    # Dropbox.
